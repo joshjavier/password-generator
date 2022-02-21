@@ -18,14 +18,29 @@
 
         <p class="subtitle">Never use an insecure password again.</p>
 
-        <button id="generate-btn">Generate passwords</button>
+        <div class="controls">
+            <button id="generate">
+                <svg width="14" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.3.046A1 1 0 0 1 9 1v5h4a1 1 0 0 1 .82 1.573l-7 10A1 1 0 0 1 5 17v-5H1a1 1 0 0 1-.82-1.573l7-10A1 1 0 0 1 8.3.047Z" fill="#fff"/>
+                </svg>
+                <span>Generate passwords</span>
+            </button>
+            <div>
+                <label for="password-length">Length: (8-20)</label>
+                <div class="length-control">
+                    <button id="decrement">-</button>
+                    <input type="number" id="password-length" min="8" max="20" value="15">
+                    <button id="increment">+</button>
+                </div>
+            </div>
+        </div>
 
         <div class="passwords">
-            <ul class="password-list" id="password-list">
-                <li><input type="text" value="" class="password"><!-- nfJjy!dDvR&ial --></li>
-                <li><input type="text" value="" class="password"><!-- eg&lt;xWij@veiPUwK --></li>
-                <li><input type="text" value="" class="password"><!-- QYY?kiYVLY)LjLi --></li>
-                <li><input type="text" value="" class="password"><!-- NcR^pIDfUZ?vY+M --></li>
+            <ul class="password-list">
+                <li><p class="password hidden">nfJjy!dDvR&ial</p></li>
+                <li><p class="password hidden">eg&lt;xWij@veiPUwK</p></li>
+                <li><p class="password hidden">QYY?kiYVLY)LjLi</p></li>
+                <li><p class="password hidden">NcR^pIDfUZ?vY+M</p></li>
             </ul>
         </div>
     </main>
