@@ -5,27 +5,16 @@ const lengthInput = document.getElementById('password-length')
 const passwordEls = document.querySelectorAll('.password')
 const popUp = document.getElementById('pop-up')
 
-let passwordLength = 15
-lengthInput.value = passwordLength
-
-decrementBtn.addEventListener('click', () => updateLength(passwordLength - 1))
-incrementBtn.addEventListener('click', () => updateLength(passwordLength + 1))
-lengthInput.addEventListener('blur', () => updateLength(lengthInput.value))
-
-generateBtn.addEventListener('click', generatePasswords)
-
-passwordEls.forEach(element => {
-  element.addEventListener('click', copyToClipboard)
-})
-
-
 
 function updateLength(number) {
   number = Number(number)  // make sure number is not a string
 
-  if (number < 8 || number > 20) return
+  if (number >= 8 && number <= 20) {
+    passwordLength = number
+  } else {
+    alert("Password length must be between 8 and 20 characters.")
+  }
   
-  passwordLength = number
   lengthInput.value = passwordLength
 }
 
@@ -63,10 +52,46 @@ function generatePasswords() {
   }
 }
 
-function copyToClipboard(event) {
-  navigator.clipboard.writeText(event.target.textContent)
+async function copyToClipboard(event) {
+  const password = event.target.textContent
+  try {
+    await navigator.clipboard.writeText(password)
+  } catch(err) {
+    console.log("Clipboard access denied. Time to go old school...")
+    copyUsingExecCommand(password)
+  }
 
   // show a pop-up to notify the user
-  popUp.style.opacity = 1
-  setTimeout(() => popUp.style.opacity = '', 3000)
+  clearTimeout(timeoutId)
+  popUp.style.opacity = 0.9
+  timeoutId = setTimeout(() => popUp.style.opacity = '', 3000)
 }
+
+function copyUsingExecCommand(text) {
+  const input = document.createElement("input")
+  input.value = text
+  input.readOnly = true
+  input.style = {
+    position: "absolute",
+    left: "-9999px"
+  }
+  document.body.append(input)
+  input.select()
+  document.execCommand("copy")
+  input.remove()
+}
+
+
+let timeoutId
+let passwordLength = 15
+lengthInput.value = passwordLength
+
+decrementBtn.addEventListener('click', () => updateLength(passwordLength - 1))
+incrementBtn.addEventListener('click', () => updateLength(passwordLength + 1))
+lengthInput.addEventListener('blur', () => updateLength(lengthInput.value))
+
+generateBtn.addEventListener('click', generatePasswords)
+
+passwordEls.forEach(element => {
+  element.addEventListener('click', copyToClipboard)
+})
