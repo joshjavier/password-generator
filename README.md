@@ -42,6 +42,7 @@ A solo project from the [Scrimba Frontend Developer Career Path](https://scrimba
 - Semantic HTML5 markup
 - CSS Flexbox
 - Mobile-first workflow
+- Vanilla JS (async/await)
 
 ### What I learned
 
