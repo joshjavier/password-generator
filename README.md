@@ -33,7 +33,7 @@ A solo project from the [Scrimba Frontend Developer Career Path](https://scrimba
 ### Links
 
 - Live Site URL: [https://joshjavier.github.io/password-generator/](https://joshjavier.github.io/password-generator/)
-- Scrim URL: [https://scrimba.com/scrim/co0b5424eb56f1a4f1e630933](https://scrimba.com/scrim/co0b5424eb56f1a4f1e630933)
+- Scrim URL: [https://scrimba.com/scrim/cob134d689abc6025421c1d66](https://scrimba.com/scrim/cob134d689abc6025421c1d66)
 
 ## My process
 
