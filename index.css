@@ -24,6 +24,7 @@ ul {
 
 button, input {
     font-size: 100%;
+    touch-action: manipulation;
 }
 
 /* Turn off number input arrows */
@@ -77,6 +78,7 @@ button {
     align-items: center;
     gap: 16px;
     background: #10B981;
+    cursor: pointer;
 }
 
 button:hover,
@@ -98,7 +100,7 @@ button#generate {
 
 .length-control > input {
     height: 100%;
-    max-width: 3em;
+    width: 3em;
     text-align: center;
     background: #273549;
 }
