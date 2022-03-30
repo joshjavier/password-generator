@@ -6,8 +6,12 @@ const passwordEls = document.querySelectorAll('.password')
 const popUp = document.getElementById('pop-up')
 
 
-function updateLength(number) {
-  number = Number(number)  // make sure number is not a string
+/*------------------------------------*\
+  #EVENT-HANDLERS
+\*------------------------------------*/
+
+function updateLength(event) {
+  const number = Math.floor(event.target.value)
 
   if (number >= 8 && number <= 20) {
     passwordLength = number
@@ -15,8 +19,54 @@ function updateLength(number) {
     alert("Password length must be between 8 and 20 characters.")
   }
   
-  lengthInput.value = passwordLength
+  event.target.value = passwordLength
 }
+
+function inputStepper(event) {
+  if (event.target.id === "decrement") {
+    lengthInput.stepDown()
+  }
+
+  if (event.target.id === "increment") {
+    lengthInput.stepUp()
+  }
+
+  passwordLength = lengthInput.value
+}
+
+async function copyToClipboard(event) {
+  const password = event.target.textContent
+  try {
+    await navigator.clipboard.writeText(password)
+  } catch(err) {
+    console.log("Clipboard access denied. Time to go old school...")
+    copyUsingExecCommand(password)
+  }
+
+  // show a pop-up to notify the user
+  clearTimeout(timeoutId)
+  popUp.style.opacity = 0.9
+  timeoutId = setTimeout(() => popUp.style.opacity = '', 3000)
+}
+
+function copyUsingExecCommand(text) {
+  const input = document.createElement("input")
+  input.value = text
+  input.readOnly = true
+  input.style = {
+    position: "absolute",
+    left: "-9999px"
+  }
+  document.body.append(input)
+  input.select()
+  document.execCommand("copy")
+  input.remove()
+}
+
+
+/*------------------------------------*\
+  #GENERATOR-FUNCTIONS
+\*------------------------------------*/
 
 function generatePassword() {
   const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -52,43 +102,15 @@ function generatePasswords() {
   }
 }
 
-async function copyToClipboard(event) {
-  const password = event.target.textContent
-  try {
-    await navigator.clipboard.writeText(password)
-  } catch(err) {
-    console.log("Clipboard access denied. Time to go old school...")
-    copyUsingExecCommand(password)
-  }
 
-  // show a pop-up to notify the user
-  clearTimeout(timeoutId)
-  popUp.style.opacity = 0.9
-  timeoutId = setTimeout(() => popUp.style.opacity = '', 3000)
-}
-
-function copyUsingExecCommand(text) {
-  const input = document.createElement("input")
-  input.value = text
-  input.readOnly = true
-  input.style = {
-    position: "absolute",
-    left: "-9999px"
-  }
-  document.body.append(input)
-  input.select()
-  document.execCommand("copy")
-  input.remove()
-}
-
-
+// Initialize
 let timeoutId
 let passwordLength = 15
 lengthInput.value = passwordLength
 
-decrementBtn.addEventListener('click', () => updateLength(passwordLength - 1))
-incrementBtn.addEventListener('click', () => updateLength(passwordLength + 1))
-lengthInput.addEventListener('blur', () => updateLength(lengthInput.value))
+decrementBtn.addEventListener('click', inputStepper)
+incrementBtn.addEventListener('click', inputStepper)
+lengthInput.addEventListener('blur', updateLength)
 
 generateBtn.addEventListener('click', generatePasswords)
 
